@@ -1,0 +1,72 @@
+// Importar las librerías de Three.js
+import * as THREE from 'three';
+
+// Definir constantes para las medidas
+const BOX_WIDTH = 2;
+const BOX_HEIGHT = 2;
+const BOX_DEPTH = 2;
+const LEG_WIDTH = 0.1;
+const LEG_HEIGHT = 1.0;
+const LEG_DEPTH = 0.1;
+const SEAT_SIDE = 0.8;
+const SEAT_THICKNESS = 0.2;
+const BACKREST_RADIUS = 0.4;
+const BACKREST_THICKNESS = 0.2;
+
+// Crear una función para crear geometrías personalizadas
+function createCustomGeometry(width, height, depth) {
+  return new THREE.BoxGeometry(width, height, depth);
+}
+
+// Crear una función para crear un material personalizado
+function createCustomMaterial(color) {
+  return new THREE.MeshBasicMaterial({ color });
+}
+
+// Crear una función para crear un objeto y posicionarlo
+function createAndPositionObject(geometry, material, position) {
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.position.copy(position);
+  return mesh;
+}
+
+// Crear una función para construir la silla
+function buildChair() {
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.z = 5;
+  
+  const renderer = new THREE.WebGLRenderer();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
+
+  const legGeometry = createCustomGeometry(LEG_WIDTH, LEG_HEIGHT, LEG_DEPTH);
+  const seatGeometry = createCustomGeometry(SEAT_SIDE, SEAT_THICKNESS, SEAT_SIDE);
+  const backrestGeometry = new THREE.CylinderGeometry(BACKREST_RADIUS, BACKREST_RADIUS, BACKREST_THICKNESS, 32);
+
+  const material = createCustomMaterial(0x00ff00);
+
+  const leg1 = createAndPositionObject(legGeometry, material, new THREE.Vector3(-BOX_WIDTH / 2 + LEG_WIDTH / 2, -LEG_HEIGHT / 2, -BOX_DEPTH / 2 + LEG_DEPTH / 2));
+  const leg2 = createAndPositionObject(legGeometry, material, new THREE.Vector3(BOX_WIDTH / 2 - LEG_WIDTH / 2, -LEG_HEIGHT / 2, -BOX_DEPTH / 2 + LEG_DEPTH / 2));
+  const leg3 = createAndPositionObject(legGeometry, material, new THREE.Vector3(-BOX_WIDTH / 2 + LEG_WIDTH / 2, -LEG_HEIGHT / 2, BOX_DEPTH / 2 - LEG_DEPTH / 2));
+  const leg4 = createAndPositionObject(legGeometry, material, new THREE.Vector3(BOX_WIDTH / 2 - LEG_WIDTH / 2, -LEG_HEIGHT / 2, BOX_DEPTH / 2 - LEG_DEPTH / 2));
+  const seat = createAndPositionObject(seatGeometry, material, new THREE.Vector3(0, -LEG_HEIGHT - SEAT_THICKNESS / 2, 0));
+  const backrest = createAndPositionObject(backrestGeometry, material, new THREE.Vector3(0, -LEG_HEIGHT - SEAT_THICKNESS + BACKREST_THICKNESS / 2, 0));
+
+  scene.add(leg1, leg2, leg3, leg4, seat, backrest);
+
+  function animate() {
+    requestAnimationFrame(animate);
+
+    // Rotar la silla
+    seat.rotation.x += 0.01;
+    seat.rotation.y += 0.01;
+
+    renderer.render(scene, camera);
+  }
+
+  animate();
+}
+
+// Llamar a la función para construir la silla
+buildChair();
