@@ -1,0 +1,8 @@
+1. ¿Qué pasa si cambia la curva por una línea recta? ¿Cómo se verá el tubo en este caso?
+
+Si cambia la curva por una línea recta en el código proporcionado, el tubo se verá como una línea recta en lugar de una curva. Esto significa que el tubo se extenderá de un punto a otro en línea recta.
+
+2. ¿Qué sucede si ajusta el grosor del tubo o cambia el material utilizado para renderizarlo?
+Si se  ajusta el grosor del tubo o cambias el material utilizado para renderizarlo en el código proporcionado, se tendra un efecto visual diferente en el resultado final del tubo,  por ejemplo el grosor del tubo se establece en 0,5 , si se  aumenta ese valor, el tubo se volverá más grueso, mientras que si lo disminuyes, el tubo se volverá más delgado.
+3. ¿Puede añadir iluminación y sombreado para mejorar la visualización del tubo?
+Sí, es posible agregar iluminación y sombreado para mejorar la visualización del tubo . Al aplicar la iluminación y el sombreado, puede hacer que el tubo se vea de manera realista y detallado.
