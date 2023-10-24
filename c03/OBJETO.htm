@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Objeto 3D con Three.js</title>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Variables globales
+        let scene, camera, renderer, tetrahedron, cube;
+
+        // Configurar la escena
+        function init() {
+            // Escena
+            scene = new THREE.Scene();
+
+            // Cámara
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            // Renderizador
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.getElementById("canvas-container").appendChild(renderer.domElement);
+
+            // Objeto 3D (tetraedro rojo)
+            const geometryTetrahedron = new THREE.TetrahedronGeometry(1);
+            const materialTetrahedron = new THREE.MeshPhongMaterial({ color: 0xff0000, flatShading: true });
+            tetrahedron = new THREE.Mesh(geometryTetrahedron, materialTetrahedron);
+            scene.add(tetrahedron);
+
+            // Objeto 3D (cubo azul)
+            const geometryCube = new THREE.BoxGeometry(1.5, 1.5, 1.5);
+            const materialCube = new THREE.MeshPhongMaterial({ color: 0x0000ff, flatShading: true });
+            cube = new THREE.Mesh(geometryCube, materialCube);
+            scene.add(cube);
+        }
+
+        // Animación
+        function animate() {
+            requestAnimationFrame(animate);
+            tetrahedron.rotation.x += 0.01;
+            tetrahedron.rotation.y += 0.01;
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
+
+        // Inicializar y comenzar la animación
+        init();
+        animate();
+    </script>
+</body>
+</html>
